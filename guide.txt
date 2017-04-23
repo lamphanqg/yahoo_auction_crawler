@@ -1,0 +1,3 @@
+- install python 3 with .exe file (pip included)
+- install Scrapy
+- pip install pypiwin32
