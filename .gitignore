@@ -1,3 +1,7 @@
 scrapy_output.txt
 yahoo_auc_crawler/__pycache__
 yahoo_auc_crawler/spiders/__pycache__
+
+images/
+
+*.csv
