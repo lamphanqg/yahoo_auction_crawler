@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from urllib.parse import urlparse
 from urllib.parse import parse_qsl
 import scrapy
@@ -6,12 +7,14 @@ import requests
 class ProductsSpider(scrapy.Spider):
     name = "products"
 
-    start_urls = ['https://auctions.yahoo.co.jp/seller/tolvio0256?ngram=1']
+    start_urls = ['https://auctions.yahoo.co.jp/seller/tolvio0256']
     product_num = 0
+
+    DETAIL_HTML = open('detail_format.html', 'r').read()
 
     def parse(self, response):
         for href in response.css('.a1wrp>h3>a::attr(href)').extract():
-            yield scrapy.Request(response.urljoin(href), callback=self.parse_product)
+            yield scrapy.Request(response.urljoin(href), callback=self.parse_product, dont_filter=True)
 
         next_page = response.css('.next>a::attr(href)').extract_first()
         if next_page is not None:
@@ -31,6 +34,16 @@ class ProductsSpider(scrapy.Spider):
 
         init_price_str = response.css('.ProductDetail__body .l-right .ProductDetail__description::text').extract()[3].strip()
         init_price = int(init_price_str.replace(' 円', '').replace(',', ''))
+
+        all_info_lines = response.xpath("//*[@class='ProductExplanation']/descendant::text()").extract()
+        init_line = 0
+        end_line = 0
+        for index, line in enumerate(all_info_lines):
+            if '商品詳細' in line:
+                init_line = index + 1
+            elif '支払詳細' in line:
+                end_line = index
+        product_info = "\n".join(all_info_lines[init_line:end_line])
 
         images = ['', '', '']
         image_urls = response.css('.ProductImage__inner>img::attr(src)').extract()
@@ -52,7 +65,7 @@ class ProductsSpider(scrapy.Spider):
             '#': strnumber,
             'カテゴリ': category_str,
             'タイトル': extract_with_css('h1.ProductTitle__text::text'),
-            '説明': '',
+            '説明': self.DETAIL_HTML.replace('--商品詳細本文--', product_info),
             '開始価格': init_price,
             '即決価格': '',
             '個数': int(response.css('.ProductDetail__body .l-left .ProductDetail__description::text').extract()[1].strip()),
