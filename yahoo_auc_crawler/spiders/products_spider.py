@@ -10,7 +10,7 @@ class ProductsSpider(scrapy.Spider):
     start_urls = ['https://auctions.yahoo.co.jp/seller/tolvio0256']
     product_num = 0
 
-    DETAIL_HTML = open('detail_format.html', 'r').read()
+    DETAIL_HTML = open('detail_format.html', 'r', encoding='utf8').read()
 
     def parse(self, response):
         for href in response.css('.a1wrp>h3>a::attr(href)').extract():
