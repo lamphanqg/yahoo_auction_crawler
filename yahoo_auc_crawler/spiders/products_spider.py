@@ -7,10 +7,13 @@ import requests
 class ProductsSpider(scrapy.Spider):
     name = "products"
 
-    start_urls = ['https://auctions.yahoo.co.jp/seller/tolvio0256']
     product_num = 0
 
     DETAIL_HTML = open('detail_format.html', 'r', encoding='utf8').read()
+
+    def __init__(self, author_url=None, *args, **kwargs):
+        super(ProductsSpider, self).__init__(*args, **kwargs)
+        self.start_urls = [author_url]
 
     def parse(self, response):
         for href in response.css('.a1wrp>h3>a::attr(href)').extract():
