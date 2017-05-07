@@ -5,3 +5,4 @@ yahoo_auc_crawler/spiders/__pycache__
 images/
 
 *.csv
+*.png
