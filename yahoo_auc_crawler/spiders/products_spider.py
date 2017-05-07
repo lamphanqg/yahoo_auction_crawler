@@ -26,7 +26,10 @@ class ProductsSpider(scrapy.Spider):
 
     def parse_product(self, response):
         def extract_with_css(query):
-            return response.css(query).extract_first().strip()
+            try:
+                return response.css(query).extract_first().strip()
+            except AttributeError:
+                return ""
 
         self.product_num += 1
         strnumber = str(self.product_num).zfill(4)
