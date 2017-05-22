@@ -68,7 +68,6 @@ class ProductsSpider(scrapy.Spider):
                         handle.write(block)
 
         yield {
-            '#': strnumber,
             'カテゴリ': category_str,
             'タイトル': extract_with_css('h1.ProductTitle__text::text'),
             '説明': self.DETAIL_HTML.replace('--商品詳細本文--', product_info),

@@ -25,7 +25,7 @@ LOG_FILE = './scrapy_output.txt'
 FEED_URI = 'products.csv'
 FEED_EXPORT_ENCODING = 'utf-8'
 FEED_FORMAT = 'csv'
-FEED_EXPORT_FIELDS = ['#', 'カテゴリ', 'タイトル', '説明', '開始価格', '即決価格',
+FEED_EXPORT_FIELDS = ['カテゴリ', 'タイトル', '説明', '開始価格', '即決価格',
                       '個数', '開催期間', '終了時間', '画像1', '画像２', '画像３',
                       '商品発送元の都道府県', '送料負担', '代金支払い', 'Yahoo!かんたん決済',
                       '銀行振込', 'かんたん取引', '銀行ID1', '銀行名1', '現金書留', '商品代引',
