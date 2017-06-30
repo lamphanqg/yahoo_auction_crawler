@@ -11,9 +11,10 @@ class ProductsSpider(scrapy.Spider):
 
     DETAIL_HTML = open('detail_format.html', 'r', encoding='utf8').read()
 
-    def __init__(self, author_url=None, *args, **kwargs):
+    def __init__(self, author_url=None, bank_id=None, *args, **kwargs):
         super(ProductsSpider, self).__init__(*args, **kwargs)
         self.start_urls = [author_url]
+        self.bank_id = bank_id
 
     def parse(self, response):
         for href in response.css('.a1wrp>h3>a::attr(href)').extract():
@@ -40,6 +41,8 @@ class ProductsSpider(scrapy.Spider):
 
         init_price_str = response.css('.ProductDetail__body .l-right .ProductDetail__description::text').extract()[3].strip()
         init_price = int(init_price_str.replace(' 円', '').replace(',', ''))
+        if init_price >= 8000:
+            return
 
         all_info_lines = response.xpath("//*[@class='ProductExplanation']/descendant::text()").extract()
         init_line = 0
@@ -73,9 +76,9 @@ class ProductsSpider(scrapy.Spider):
             '説明': self.DETAIL_HTML.replace('--商品詳細本文--', product_info),
             '開始価格': init_price,
             '即決価格': '',
-            '個数': int(response.css('.ProductDetail__body .l-left .ProductDetail__description::text').extract()[1].strip()),
+            '個数': 1,
             '開催期間': 1,
-            '終了時間': 10,
+            '終了時間': 21,
             '画像1': images[0],
             '画像２': images[1],
             '画像３': images[2],
@@ -85,7 +88,7 @@ class ProductsSpider(scrapy.Spider):
             'Yahoo!かんたん決済': 'はい',
             '銀行振込': 'はい',
             'かんたん取引': 'はい',
-            '銀行ID1': '3197870',
+            '銀行ID1': str(self.bank_id),
             '銀行名1': 'ゆうちょ',
             '現金書留': 'いいえ',
             '商品代引': 'いいえ',
@@ -109,11 +112,12 @@ class ProductsSpider(scrapy.Spider):
             'ネコ宅急便': 'いいえ',
             'はこBOON': 'いいえ',
             'はこBOONmini': 'いいえ',
+            '発送までの日数': '1日～2日',
             '配送方法1': '当店契約発送代行業者',
             '配送方法1全国一律価格': 800,
             '受け取り後決済サービス': 'いいえ',
             '海外発送': 'いいえ',
             'アフィリエイト': 'はい',
             'アフィリエイト報酬率': 1,
-            '出品者情報開示前チェック': 'いいえ'
+            '出品者情報開示前チェック': 'はい'
         }
