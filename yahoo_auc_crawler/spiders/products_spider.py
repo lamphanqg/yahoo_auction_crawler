@@ -10,6 +10,7 @@ class ProductsSpider(scrapy.Spider):
     product_num = 0
 
     DETAIL_HTML = open('detail_format.html', 'r', encoding='utf8').read()
+    MAX_INIT_PRICE = 8000
 
     def __init__(self, author_url=None, bank_id=None, *args, **kwargs):
         super(ProductsSpider, self).__init__(*args, **kwargs)
@@ -41,7 +42,7 @@ class ProductsSpider(scrapy.Spider):
 
         init_price_str = response.css('.ProductDetail__body .l-right .ProductDetail__description::text').extract()[3].strip()
         init_price = int(init_price_str.replace(' 円', '').replace(',', ''))
-        if init_price >= 8000:
+        if init_price >= self.MAX_INIT_PRICE:
             return
 
         all_info_lines = response.xpath("//*[@class='ProductExplanation']/descendant::text()").extract()
