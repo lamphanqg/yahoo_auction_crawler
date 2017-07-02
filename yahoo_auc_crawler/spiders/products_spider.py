@@ -33,9 +33,6 @@ class ProductsSpider(scrapy.Spider):
             except AttributeError:
                 return ""
 
-        self.product_num += 1
-        strnumber = str(self.product_num).zfill(4)
-
         category_link = response.css('.acMdNaviBox .st04>a::attr(href)').extract_first()
         query_string = urlparse(category_link).query
         category_str = parse_qsl(query_string)[0][1]
@@ -44,6 +41,9 @@ class ProductsSpider(scrapy.Spider):
         init_price = int(init_price_str.replace(' 円', '').replace(',', ''))
         if init_price >= self.MAX_INIT_PRICE:
             return
+
+        self.product_num += 1
+        strnumber = str(self.product_num).zfill(4)
 
         all_info_lines = response.xpath("//*[@class='ProductExplanation']/descendant::text()").extract()
         init_line = 0
@@ -120,5 +120,5 @@ class ProductsSpider(scrapy.Spider):
             '海外発送': 'いいえ',
             'アフィリエイト': 'はい',
             'アフィリエイト報酬率': 1,
-            '出品者情報開示前チェック': 'はい'
+            '出品者情報開示前チェック': 'いいえ'
         }
