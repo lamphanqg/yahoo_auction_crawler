@@ -12,10 +12,9 @@ class ProductsSpider(scrapy.Spider):
     DETAIL_HTML = open('detail_format.html', 'r', encoding='utf8').read()
     MAX_INIT_PRICE = 8000
 
-    def __init__(self, author_url=None, bank_id=None, *args, **kwargs):
+    def __init__(self, author_url=None, *args, **kwargs):
         super(ProductsSpider, self).__init__(*args, **kwargs)
         self.start_urls = [author_url]
-        self.bank_id = bank_id
 
     def parse(self, response):
         for href in response.css('.a1wrp>h3>a::attr(href)').extract():
@@ -87,10 +86,8 @@ class ProductsSpider(scrapy.Spider):
             '送料負担': '落札者',
             '代金支払い': '先払い',
             'Yahoo!かんたん決済': 'はい',
-            '銀行振込': 'はい',
+            '銀行振込': 'いいえ',
             'かんたん取引': 'はい',
-            '銀行ID1': str(self.bank_id),
-            '銀行名1': 'ゆうちょ',
             '現金書留': 'いいえ',
             '商品代引': 'いいえ',
             '商品の状態': response.css('.ProductDetail__body .l-left .ProductDetail__description::text').extract()[0].strip(),
@@ -114,7 +111,7 @@ class ProductsSpider(scrapy.Spider):
             'はこBOON': 'いいえ',
             'はこBOONmini': 'いいえ',
             '発送までの日数': '1日～2日',
-            '配送方法1': '当店契約発送代行業者',
+            '配送方法1': '当店契約代行業者',
             '配送方法1全国一律価格': 800,
             '受け取り後決済サービス': 'いいえ',
             '海外発送': 'いいえ',

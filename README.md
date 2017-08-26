@@ -5,7 +5,8 @@ TODO: Write a project description
 TODO: Describe the installation process
 ## Usage
 TODO: Write usage instructions
-## Contributing
+scrapy crawl products -a author_url="https://auctions.yahoo.co.jp/seller/tolvio0256"
+py csv_fix.py
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Commit your changes: `git commit -am 'Add some feature'`
