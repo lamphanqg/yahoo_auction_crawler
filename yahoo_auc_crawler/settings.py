@@ -28,7 +28,7 @@ FEED_FORMAT = 'csv'
 FEED_EXPORT_FIELDS = ['カテゴリ', 'タイトル', '説明', '開始価格', '即決価格',
                       '個数', '開催期間', '終了時間', '画像1', '画像２', '画像３',
                       '商品発送元の都道府県', '送料負担', '代金支払い', 'Yahoo!かんたん決済',
-                      '銀行振込', 'かんたん取引', '銀行ID1', '銀行名1', '現金書留', '商品代引',
+                      '銀行振込', 'かんたん取引', '現金書留', '商品代引',
                       '商品の状態', '返品の可否', '入札者評価制限', '悪い評価の割合での制限',
                       '入札者認証制限', '自動延長', '早期終了', '値下げ交渉', '自動再出品',
                       '自動値下げ', '自動値下げ価格変更率', '太字テキスト', '背景色', '贈答品アイコン',
@@ -42,7 +42,7 @@ FEED_EXPORT_FIELDS = ['カテゴリ', 'タイトル', '説明', '開始価格', 
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 0.3
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
