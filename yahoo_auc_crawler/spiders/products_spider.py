@@ -88,6 +88,8 @@ class ProductsSpider(scrapy.Spider):
             'Yahoo!かんたん決済': 'はい',
             '銀行振込': 'いいえ',
             'かんたん取引': 'はい',
+            '銀行ID1': '',
+            '銀行名1': '',
             '現金書留': 'いいえ',
             '商品代引': 'いいえ',
             '商品の状態': response.css('.ProductDetail__body .l-left .ProductDetail__description::text').extract()[0].strip(),
