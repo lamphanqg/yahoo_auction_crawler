@@ -48,10 +48,14 @@ class ProductsSpider(scrapy.Spider):
         init_line = 0
         end_line = 0
         for index, line in enumerate(all_info_lines):
-            if '商品詳細' in line:
+            if '商品詳細' in line and init_line == 0:
                 init_line = index + 1
             elif '支払詳細' in line:
                 end_line = index
+            elif '商品詳細' in line:
+                init_line += 3
+                end_line = index
+                break
         product_info = "\n".join(all_info_lines[init_line:end_line])
 
         images = ['', '', '']
