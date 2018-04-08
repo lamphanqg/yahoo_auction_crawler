@@ -21,7 +21,7 @@ NEWSPIDER_MODULE = 'yahoo_auc_crawler.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 LOG_STDOUT = True
-LOG_FILE = './scrapy_output.txt'
+LOG_FILE = './scrapy_output.log'
 FEED_URI = 'products.csv'
 FEED_EXPORT_ENCODING = 'utf-8'
 FEED_FORMAT = 'csv'
