@@ -1,20 +1,21 @@
 # Project Name
 Yahoo Auction JP Product Information Crawler
-TODO: Write a project description
+This project includes following tools:
+
+1. Crawler written with scrapy
+2. csv_fix.py to remove abundant blank lines when use in Windows
+3. csv_cplit.py to divide the result CSV file into 300-line CSV files
+
 ## Installation
-TODO: Describe the installation process
+Install python 3
+
 ## Usage
-TODO: Write usage instructions
+Run these commands in terminal or cmd:
+
+```
 scrapy crawl products -a author_url="https://auctions.yahoo.co.jp/seller/tolvio0256"
-py csv_fix.py
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
-## History
-TODO: Write history
-## Credits
-TODO: Write credits
+py csv_fix.py (in windows only)
+```
+
 ## License
 MIT License
