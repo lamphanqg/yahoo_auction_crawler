@@ -14,7 +14,7 @@ def build_duplicated_title_list(titles):
     for title in titles:
         if title not in seen:
             seen.add(title)
-        else:
+        elif title not in duplicates:
             duplicates.add(title)
 
 
