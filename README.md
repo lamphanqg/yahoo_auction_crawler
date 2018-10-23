@@ -16,6 +16,7 @@ Run these commands in terminal or cmd:
 scrapy crawl products -a author_url="https://auctions.yahoo.co.jp/seller/verifymarche"
 py csv_fix.py (in windows only)
 py csv_split.py
+py create_zips.py
 ```
 
 ## License
