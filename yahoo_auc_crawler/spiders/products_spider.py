@@ -44,19 +44,7 @@ class ProductsSpider(scrapy.Spider):
         self.product_num += 1
         strnumber = str(self.product_num).zfill(4)
 
-        all_info_lines = response.xpath("//*[@class='ProductExplanation']/descendant::text()").extract()
-        init_line = 0
-        end_line = 0
-        for index, line in enumerate(all_info_lines):
-            if '商品詳細' in line and init_line == 0:
-                init_line = index + 1
-            elif '支払詳細' in line:
-                end_line = index
-            elif '商品詳細' in line:
-                init_line += 3
-                end_line = index
-                break
-        product_info = "\n".join(all_info_lines[init_line:end_line])
+        product_info = self.parse_product_info(response)
 
         images = ['', '', '']
         image_urls = response.css('.ProductImage__inner>img::attr(src)').extract()
@@ -125,3 +113,19 @@ class ProductsSpider(scrapy.Spider):
             'アフィリエイト報酬率': 1,
             '出品者情報開示前チェック': 'いいえ'
         }
+
+    def parse_product_info(self, response):
+        all_info_lines = response.xpath("//*[@class='ProductExplanation']/descendant::text()").extract()
+        init_line = 0
+        end_line = 0
+        for index, line in enumerate(all_info_lines):
+            if '商品詳細' in line and init_line == 0:
+                init_line = index + 1
+            elif '支払詳細' in line:
+                end_line = index
+            elif '商品詳細' in line:
+                init_line += 3
+                end_line = index
+                break
+        product_info = "\n".join(all_info_lines[init_line:end_line])
+        return product_info
