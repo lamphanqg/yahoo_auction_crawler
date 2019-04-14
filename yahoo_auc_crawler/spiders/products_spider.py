@@ -10,7 +10,7 @@ class ProductsSpider(scrapy.Spider):
     product_num = 0
 
     DETAIL_HTML = open('detail_format.html', 'r', encoding='utf8').read()
-    MAX_INIT_PRICE = 8000
+    MAX_INIT_PRICE = 6000
 
     def __init__(self, author_url=None, *args, **kwargs):
         super(ProductsSpider, self).__init__(*args, **kwargs)
@@ -96,7 +96,7 @@ class ProductsSpider(scrapy.Spider):
             '銀行名1': '',
             '現金書留': 'いいえ',
             '商品代引': 'いいえ',
-            '商品の状態': response.css('.ProductDetail__body .l-left .ProductDetail__description::text').extract()[0].strip(),
+            '商品の状態': '新品',
             '返品の可否': '返品可',
             '入札者評価制限': 'はい',
             '悪い評価の割合での制限': 'はい',
@@ -117,7 +117,7 @@ class ProductsSpider(scrapy.Spider):
             'はこBOON': 'いいえ',
             'はこBOONmini': 'いいえ',
             '発送までの日数': '1日～2日',
-            '配送方法1': '当店契約代行業者',
+            '配送方法1': '宅配便',
             '配送方法1全国一律価格': 800,
             '受け取り後決済サービス': 'いいえ',
             '海外発送': 'いいえ',
