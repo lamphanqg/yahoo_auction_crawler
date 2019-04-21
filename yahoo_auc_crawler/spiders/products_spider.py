@@ -50,6 +50,8 @@ class ProductsSpider(scrapy.Spider):
         image_urls = response.css('.ProductImage__inner>img::attr(src)').extract()
         if image_urls:
             for index, image_url in enumerate(image_urls):
+                if index >= 3:
+                    break
                 file_name = strnumber + '_' + str(index + 1) + '.jpg'
                 file_path = 'images/' + file_name
                 with open(file_path, 'wb') as handle:
