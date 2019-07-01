@@ -117,14 +117,14 @@ class ProductsSpider(scrapy.Spider):
         }
 
     def parse_product_info(self, response):
-        all_info_lines = response.xpath("//*[@class='ProductExplanation']/descendant::text()").extract()
+        all_info_lines = response.xpath("//div[contains(concat(' ',normalize-space(@class),' '),' ProductExplanation__body ')]/descendant::text()").extract()
         init_line = 0
         end_line = 0
 
         for index, line in enumerate(all_info_lines):
             if self.line_has_start(line) and init_line == 0:
                 init_line = index + 1
-            elif self.line_has_end(line):
+            elif self.line_has_end(line) and end_line == 0:
                 end_line = index
             elif '商品詳細' in line:
                 init_line += 3
@@ -134,7 +134,7 @@ class ProductsSpider(scrapy.Spider):
         return product_info
 
     def line_has_start(self, line):
-        start_words = ['商品詳細', '商品の説明']
+        start_words = ['商品詳細', '商品の説明', '商品説明']
         for word in start_words:
             if word in line:
                 return True
